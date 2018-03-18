@@ -1,1 +1,1 @@
-# Social-Network-Analysis-InterShip-2018-
+# Social-Network-Analysis-InterShip2018
