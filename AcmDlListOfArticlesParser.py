@@ -13,9 +13,12 @@ class AcmDlListOfArticlesParser:
         self.proceeding_id = None
 
     def parse(self, proceeding_id):
+        print('Starting parsing proceeding with id: {0}'.format(proceeding_id))
+
         self.proceeding_id = proceeding_id
         self.url = self.url.format(self.proceeding_id)
 
+        print('Downloading proceeding from url: {0}'.format(self.url))
         response = requests.get(url=self.url, headers=self.headers)
         soup = bs4.BeautifulSoup(response.text, 'lxml')
 
@@ -28,6 +31,7 @@ class AcmDlListOfArticlesParser:
         for a in refs_for_articles:
             article_ids.append(a['href'].split('=')[-1])
 
+        print('Successfully!!! ^_^')
         return article_ids
 
 

@@ -14,12 +14,15 @@ class AcmDlListOfProceedingsParser:
         self.client_id = None
 
     def parse(self, event_id, client_id):
+        print('Starting parsing event with id: {0}'.format(event_id))
+
         self.event_id = event_id
         self.client_id = client_id
         self.url = self.url.format(event_id, client_id)
 
         proceeding_ids = []
 
+        print('Downloading event from url: {0}'.format(self.url))
         response = requests.get(url=self.url, headers=self.headers)
         soup = bs4.BeautifulSoup(response.text, 'lxml')
 
@@ -30,6 +33,7 @@ class AcmDlListOfProceedingsParser:
             for href in a:
                 proceeding_ids.append(href['href'].split('=')[-1])
 
+        print('Successfully!!! ^_^')
         return proceeding_ids
 
 
