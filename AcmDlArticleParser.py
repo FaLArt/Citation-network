@@ -18,8 +18,8 @@ class AcmDlArticleParser:
     def parse(self, article_id):
         print('Start parsing article with id: {0}'.format(article_id), 'Initializing...', sep='\n')
         self.id = article_id
-        self.url = self.url.format(self.id)
-        self.url_download_bibtex = self.url_download_bibtex.format(self.id, self.exp_format)
+        self.url = self.url.format(article_id)
+        self.url_download_bibtex = self.url_download_bibtex.format(article_id, self.exp_format)
 
         article_data = {}
 
@@ -103,5 +103,5 @@ class AcmDlArticleParser:
 
 if __name__ == '__main__':
     parser = AcmDlArticleParser()
-    article_data = parser.parse('2635922')
+    article_data = parser.parse('1295014')
     open('data.json', 'w').write(json.dumps(article_data, indent=4))

@@ -1,7 +1,7 @@
 import requests, bs4
 
 
-class AcmDlListOfArticleParser:
+class AcmDlListOfProceedingsParser:
     domain = 'https://dl.acm.org/'
     publication_tab = '&_cf_containerId=cf_layoutareapubs&_cf_nodebug=true&_cf_nocache=true&_cf_clientid' \
                       '={1}&_cf_rc=1 '
@@ -18,7 +18,7 @@ class AcmDlListOfArticleParser:
         self.client_id = client_id
         self.url = self.url.format(event_id, client_id)
 
-        article_ids = []
+        proceeding_ids = []
 
         response = requests.get(url=self.url, headers=self.headers)
         soup = bs4.BeautifulSoup(response.text, 'lxml')
@@ -28,11 +28,11 @@ class AcmDlListOfArticleParser:
         for ul in uls:
             a = ul.find_all('a')
             for href in a:
-                article_ids.append(href['href'].split('=')[-1])
+                proceeding_ids.append(href['href'].split('=')[-1])
 
-        return article_ids
+        return proceeding_ids
 
 
 if __name__ == '__main__':
-    parser = AcmDlListOfArticleParser()
+    parser = AcmDlListOfProceedingsParser()
     print(parser.parse('RE201', 'C3FE7A81D2B94946F9F673E2A6A2D243'))
