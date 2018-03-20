@@ -25,8 +25,8 @@ class AcmDlListOfArticlesParser:
         article_ids = []
 
         layout = soup.find('div', {'class': 'layout'})
-        table = layout.find('table', {'class': 'text12'})
-        refs_for_articles = table.find_all(href=re.compile(r'citation.cfm\?id=.*'))
+        table = layout.find_all('table', {'class': 'text12'})
+        refs_for_articles = table[-1].find_all(href=re.compile(r'citation.cfm\?id=.*'))
 
         for a in refs_for_articles:
             article_ids.append(a['href'].split('=')[-1])

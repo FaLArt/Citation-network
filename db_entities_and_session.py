@@ -19,20 +19,21 @@ class Article(db.Entity):
     year = Required(int)
     venue_id = Optional(Venue)
     article__citation_article_id = Set('Citation', reverse='article_id')
-    article__citation_cited_by = Set('Citation', reverse='cited_by')
     article__author_article = Set('AuthorArticle', reverse='article_id')
+    # article__citation_cited_by = Set('Citation', reverse='cited_by')
 
 
 class Citation(db.Entity):
     citation_id = PrimaryKey(int, auto=True)
     article_id = Required(Article)
-    cited_by = Required(Article)
+    cited_by = Required(int)
+    # cited_by = Required(Author)
 
 
 class Author(db.Entity):
-    author_id = PrimaryKey(int)
-    first_name = Required(str)
-    last_name = Required(str)
+    author_id = PrimaryKey(int, auto=True)
+    name = Required(str, unique=True)
+    url = Optional(str, max_len=256)
     author__author_article = Set('AuthorArticle', reverse='author_id')
 
 
