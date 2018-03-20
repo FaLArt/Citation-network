@@ -1,4 +1,4 @@
-import requests, bs4, json
+import requests, bs4, json, re
 from bibtexparser.bparser import BibTexParser
 
 
@@ -18,8 +18,8 @@ class AcmDlArticleParser:
     def parse(self, article_id):
         print('Start parsing article with id: {0}'.format(article_id), 'Initializing...', sep='\n')
         self.id = article_id
-        self.url = self.url.format(self.id)
-        self.url_download_bibtex = self.url_download_bibtex.format(self.id, self.exp_format)
+        self.url = self.url.format(article_id)
+        self.url_download_bibtex = self.url_download_bibtex.format(article_id, self.exp_format)
 
         article_data = {}
 
@@ -31,11 +31,11 @@ class AcmDlArticleParser:
         bibtex_file = open('bibtex.bib', 'r')
         bibtex_dict = BibTexParser(interpolate_strings=False).parse_file(bibtex_file).entries
 
-        article_data['id'] = article_id
+        article_data['article_id'] = article_id
         article_data['url'] = self.url
-        article_data['title'] = bibtex_dict[0].get('title', None)
-        article_data['doi'] = bibtex_dict[0].get('doi', None)
-        article_data['year'] = bibtex_dict[0].get('year', None)
+        article_data['title'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('title', None)))
+        article_data['doi'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('doi', None)))
+        article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 
         print('Getting authors...')
         self.__get_authors(soup, article_data)
@@ -70,7 +70,7 @@ class AcmDlArticleParser:
         layout = soup.find('div', {'class': 'layout'})
         flatbody = layout.find('div', {'class': 'flatbody'})
 
-        abstract = flatbody.text.strip()
+        abstract = re.sub('[\'\']', '', repr(flatbody.text.strip()))
         article_data['abstract'] = abstract
 
     def __get_venue(self, soup, article_data):
@@ -78,7 +78,7 @@ class AcmDlArticleParser:
 
         if td:
             td = td.nextSibling.nextSibling
-            venue = td.strong.text.strip()
+            venue = re.sub('[\'\']', '', repr(td.strong.text.strip()))
             url_conference = td.a['href']
         else:
             venue = None
@@ -103,5 +103,5 @@ class AcmDlArticleParser:
 
 if __name__ == '__main__':
     parser = AcmDlArticleParser()
-    article_data = parser.parse('2635922')
+    article_data = parser.parse('1295014')
     open('data.json', 'w').write(json.dumps(article_data, indent=4))
