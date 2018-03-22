@@ -1,4 +1,7 @@
-import requests, bs4, json, re
+import bs4
+import json
+import re
+import requests
 from bibtexparser.bparser import BibTexParser
 
 
@@ -33,7 +36,7 @@ class AcmDlArticleParser:
 
         article_data['article_id'] = article_id
         article_data['url'] = self.url
-        article_data['title'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('title', None)))
+        article_data['title'] = re.sub('[\'\'\"]', '', repr(bibtex_dict[0].get('title', None)))
         article_data['doi'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('doi', None)))
         article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 
@@ -60,7 +63,7 @@ class AcmDlArticleParser:
 
         for author_tag in authors_tags:
             name = author_tag.text
-            authors.append({'name': name.strip(),
+            authors.append({'name': re.sub('[\'\']', '', repr(name.strip())),
                             'url': self.domain + author_tag.find('a')['href']})
 
         article_data['authors'] = authors
