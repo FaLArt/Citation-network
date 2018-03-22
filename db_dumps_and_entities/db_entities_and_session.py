@@ -25,7 +25,6 @@ class Citation(db.Entity):
     citation_id = PrimaryKey(int, auto=True)
     article_id = Required(Article)
     cited_by = Required(int)
-    # cited_by = Required(Author)
 
 
 class Author(db.Entity):
@@ -35,17 +34,17 @@ class Author(db.Entity):
     author__author_article = Set('AuthorArticle', reverse='author_id')
 
 
-# class Affiliation(db.Entity):
-#     affiliation_id = PrimaryKey(int)
-#     name = Required(unicode, unique=True)
-#     affiliation__author_article = Set('AuthorArticle', reverse='affiliation_id')
+class Affiliation(db.Entity):
+    affiliation_id = PrimaryKey(int)
+    name = Required(unicode, unique=True)
+    affiliation__author_article = Set('AuthorArticle', reverse='affiliation_id')
 
 
 class AuthorArticle(db.Entity):
     _table_ = 'author_article'
     author_id = Required(Author)
     article_id = Required(Article)
-    # affiliation_id = Optional(Affiliation)
+    affiliation_id = Optional(Affiliation)
 
 
 db.bind(provider='mysql', host='localhost', user='root', passwd='root', db='soc_net_analysis')
