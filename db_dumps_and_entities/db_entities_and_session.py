@@ -18,7 +18,6 @@ class Article(db.Entity):
     venue_id = Optional(Venue)
     article__citation = Set('Citation', reverse='article_id')
     article__author_article = Set('AuthorArticle', reverse='article_id')
-    # article__citation_cited_by = Set('Citation', reverse='cited_by')
 
 
 class Citation(db.Entity):
@@ -37,6 +36,7 @@ class Author(db.Entity):
 class Affiliation(db.Entity):
     affiliation_id = PrimaryKey(int)
     name = Required(unicode, unique=True)
+    url = Optional(unicode)
     affiliation__author_article = Set('AuthorArticle', reverse='affiliation_id')
 
 
