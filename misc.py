@@ -1,3 +1,0 @@
-client_id = '77D09D38EC7423DB3CB517F4AAB87826'
-event_id = 'RE201'
-
