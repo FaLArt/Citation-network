@@ -41,7 +41,7 @@ class AcmDlArticleParser:
         article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 
         print('Getting authors...')
-        self.__get_authors(soup, article_data)
+        self.__get_authors_and_affiliations(soup, article_data)
 
         print('Getting abstract...')
         self.__get_abstract(soup, article_data)
@@ -55,18 +55,24 @@ class AcmDlArticleParser:
         print('Successfully!!! ^_^')
         return article_data
 
-    def __get_authors(self, soup, article_data):
+    def __get_authors_and_affiliations(self, soup, article_data):
         divmain = soup.find('div', id='divmain')
 
-        authors_tags = divmain.find_all('td', {'style': 'padding-right:3px;', 'valign': 'top', 'nowrap': 'nowrap'})
-        authors = []
+        authors_tags = divmain.find_all('a', href=re.compile('author_page.cfm\?id=*'))
+        authors_and_affiliations = []
 
-        for author_tag in authors_tags:
-            name = author_tag.text
-            authors.append({'name': re.sub('[\'\']', '', repr(name.strip())),
-                            'url': self.domain + author_tag.find('a')['href']})
+        affiliation_tags = divmain.find_all('a', href=re.compile('inst_page.cfm\?id=*'))
 
-        article_data['authors'] = authors
+        for author, affiliation in zip(authors_tags, affiliation_tags):
+            authors_and_affiliations.append({'name': re.sub('[\'\']', '', repr(author.text.strip())),
+                                             'url': self.domain + author['href'],
+                                             'affiliation': {
+                                                 'name': re.sub('[\'\']', '', repr(affiliation.text.strip())),
+                                                 'url': self.domain + affiliation['href']}})
+
+        article_data['authors_and_affiliations'] = authors_and_affiliations
+
+        article_data['authors'] = authors_and_affiliations
 
     @staticmethod
     def __get_abstract(soup, article_data):
