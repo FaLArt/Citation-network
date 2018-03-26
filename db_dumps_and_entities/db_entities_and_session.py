@@ -34,9 +34,9 @@ class Author(db.Entity):
 
 
 class Affiliation(db.Entity):
-    affiliation_id = PrimaryKey(int)
+    affiliation_id = PrimaryKey(int, auto=True)
     name = Required(unicode, unique=True)
-    url = Optional(unicode)
+    url = Optional(unicode, unique=True)
     affiliation__author_article = Set('AuthorArticle', reverse='affiliation_id')
 
 

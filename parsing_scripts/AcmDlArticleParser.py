@@ -62,6 +62,7 @@ class AcmDlArticleParser:
         authors_and_affiliations = []
 
         affiliation_tags = divmain.find_all('a', href=re.compile('inst_page.cfm\?id=*'))
+        affiliations = []
 
         for author, affiliation in zip(authors_tags, affiliation_tags):
             authors_and_affiliations.append({'name': re.sub('[\'\']', '', repr(author.text.strip())),
@@ -71,8 +72,6 @@ class AcmDlArticleParser:
                                                  'url': self.domain + affiliation['href']}})
 
         article_data['authors_and_affiliations'] = authors_and_affiliations
-
-        article_data['authors'] = authors_and_affiliations
 
     @staticmethod
     def __get_abstract(soup, article_data):
