@@ -1,3 +1,7 @@
 .idea/*
 .ipynb_checkpoints/*
 venv/*
+notebook/.ipynb_checkpoints/*
+notebook/bibtex.bib
+source/bibtex.bib
+source/data.json

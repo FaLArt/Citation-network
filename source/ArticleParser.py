@@ -1,6 +1,7 @@
-import bs4
 import json
 import re
+
+import bs4
 import requests
 from bibtexparser.bparser import BibTexParser
 
@@ -36,7 +37,7 @@ class AcmDlArticleParser:
 
         article_data['article_id'] = article_id
         article_data['url'] = self.url
-        article_data['title'] = re.sub('[\'\'\"]', '', repr(bibtex_dict[0].get('title', None)))
+        article_data['title'] = re.sub('[\' \'\"]', '', repr(bibtex_dict[0].get('title', None)))
         article_data['doi'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('doi', None)))
         article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 
@@ -62,6 +63,7 @@ class AcmDlArticleParser:
         authors_and_affiliations = []
 
         affiliation_tags = divmain.find_all('a', href=re.compile('inst_page.cfm\?id=*'))
+        affiliations = []
 
         for author, affiliation in zip(authors_tags, affiliation_tags):
             authors_and_affiliations.append({'name': re.sub('[\'\']', '', repr(author.text.strip())),
@@ -71,8 +73,6 @@ class AcmDlArticleParser:
                                                  'url': self.domain + affiliation['href']}})
 
         article_data['authors_and_affiliations'] = authors_and_affiliations
-
-        article_data['authors'] = authors_and_affiliations
 
     @staticmethod
     def __get_abstract(soup, article_data):
