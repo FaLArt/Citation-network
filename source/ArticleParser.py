@@ -1,6 +1,7 @@
-import bs4
 import json
 import re
+
+import bs4
 import requests
 from bibtexparser.bparser import BibTexParser
 
@@ -36,7 +37,7 @@ class AcmDlArticleParser:
 
         article_data['article_id'] = article_id
         article_data['url'] = self.url
-        article_data['title'] = re.sub('[\'\'\"]', '', repr(bibtex_dict[0].get('title', None)))
+        article_data['title'] = re.sub('[\' \'\"]', '', repr(bibtex_dict[0].get('title', None)))
         article_data['doi'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('doi', None)))
         article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 

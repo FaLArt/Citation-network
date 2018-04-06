@@ -1,4 +1,6 @@
 .idea/*
 .ipynb_checkpoints/*
 venv/*
-parsing_templates_and_working_with_db/.ipynb_checkpoints/*
+notebook/.ipynb_checkpoints/*
+source/bibtex.bib
+source/data.json
