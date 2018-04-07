@@ -1,7 +1,7 @@
 import requests, re, bs4
 
 
-class AcmDlListOfArticlesParser:
+class ArticlesListParser:
     domain = 'https://dl.acm.org/'
     mode_layout = 'flat'
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'}
@@ -36,5 +36,5 @@ class AcmDlListOfArticlesParser:
 
 
 if __name__ == '__main__':
-    parser = AcmDlListOfArticlesParser()
+    parser = ArticleListParser()
     print(parser.parse('1294921'))
