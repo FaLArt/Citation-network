@@ -1,7 +1,7 @@
 import requests, bs4
 
 
-class AcmDlListOfProceedingsParser:
+class ProceedingsListParser:
     domain = 'https://dl.acm.org/'
     publication_tab = '&_cf_containerId=cf_layoutareapubs&_cf_nodebug=true&_cf_nocache=true&_cf_clientid' \
                       '={1}&_cf_rc=1 '
@@ -38,5 +38,5 @@ class AcmDlListOfProceedingsParser:
 
 
 if __name__ == '__main__':
-    parser = AcmDlListOfProceedingsParser()
+    parser = ProceedingsListParser()
     print(parser.parse('RE201', 'C3FE7A81D2B94946F9F673E2A6A2D243'))

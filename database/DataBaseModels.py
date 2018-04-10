@@ -30,6 +30,7 @@ class Author(db.Entity):
     author_id = PrimaryKey(int, auto=True)
     name = Required(LongUnicode)
     url = Optional(unicode, max_len=256)
+    citations_counter = Optional(int)
     author__author_article = Set('AuthorArticle', reverse='author_id')
 
 

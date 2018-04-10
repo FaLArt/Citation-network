@@ -6,7 +6,7 @@ import requests
 from bibtexparser.bparser import BibTexParser
 
 
-class AcmDlArticleParser:
+class ArticleParser:
     mode_layout = 'flat'
     exp_format = 'bibtex'
     domain = 'https://dl.acm.org/'
@@ -37,7 +37,7 @@ class AcmDlArticleParser:
 
         article_data['article_id'] = article_id
         article_data['url'] = self.url
-        article_data['title'] = re.sub('[\' \'\"]', '', repr(bibtex_dict[0].get('title', None)))
+        article_data['title'] = re.sub('[\'\'\"]', '', repr(bibtex_dict[0].get('title', None)))
         article_data['doi'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('doi', None)))
         article_data['year'] = re.sub('[\'\']', '', repr(bibtex_dict[0].get('year', None)))
 
@@ -63,7 +63,6 @@ class AcmDlArticleParser:
         authors_and_affiliations = []
 
         affiliation_tags = divmain.find_all('a', href=re.compile('inst_page.cfm\?id=*'))
-        affiliations = []
 
         for author, affiliation in zip(authors_tags, affiliation_tags):
             authors_and_affiliations.append({'name': re.sub('[\'\']', '', repr(author.text.strip())),
@@ -111,6 +110,6 @@ class AcmDlArticleParser:
 
 
 if __name__ == '__main__':
-    parser = AcmDlArticleParser()
+    parser = ArticleParser()
     article_data = parser.parse('1295014')
     open('data.json', 'w').write(json.dumps(article_data, indent=4))
