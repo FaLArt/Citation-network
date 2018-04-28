@@ -1,8 +1,8 @@
 import json
 import re
-
 import bs4
 import requests
+
 from bibtexparser.bparser import BibTexParser
 
 
