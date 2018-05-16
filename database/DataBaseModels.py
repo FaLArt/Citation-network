@@ -12,18 +12,19 @@ class Venue(db.Entity):
 
 class Article(db.Entity):
     article_id = PrimaryKey(int)
-    title = Required(unicode)
-    abstract = Required(LongUnicode)
-    year = Required(int)
+    title = Required(unicode, default='None')
+    abstract = Required(LongUnicode, default='None')
+    year = Required(int, default=0000)
     venue_id = Optional(Venue)
-    article__citation = Set('Citation', reverse='article_id')
+    article__citation_article_id = Set('Citation', reverse='article_id')
+    article__citation_cited_by = Set('Citation', reverse='cited_by')
     article__author_article = Set('AuthorArticle', reverse='article_id')
 
 
 class Citation(db.Entity):
     citation_id = PrimaryKey(int, auto=True)
     article_id = Required(Article)
-    cited_by = Required(int)
+    cited_by = Required(Article)
 
 
 class Author(db.Entity):
