@@ -1,1 +1,1 @@
-# Social-Network-Analysis-InterShip2018
+# Citation network of research article
