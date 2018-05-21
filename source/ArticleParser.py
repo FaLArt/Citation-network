@@ -38,8 +38,8 @@ class ArticleParser:
         article_data['article_id'] = article_id
         article_data['url'] = self.url
         article_data['title'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('title', None)))
-        article_data['doi'] = re.sub('[\']', '', repr(bibtex_dict[0].get('doi', None)))
-        article_data['year'] = re.sub('[\']', '', repr(bibtex_dict[0].get('year', None)))
+        article_data['doi'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('doi', None)))
+        article_data['year'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('year', None)))
 
         print('Getting authors...')
         self.__get_authors_and_affiliations(soup, article_data)
@@ -65,10 +65,10 @@ class ArticleParser:
         affiliation_tags = divmain.find_all('a', href=re.compile('inst_page.cfm\?id=*'))
 
         for author, affiliation in zip(authors_tags, affiliation_tags):
-            authors_and_affiliations.append({'name': re.sub('[\'\']', '', repr(author.text.strip())),
+            authors_and_affiliations.append({'name': re.sub('[\'\"]', '', repr(author.text.strip())),
                                              'url': self.domain + author['href'],
                                              'affiliation': {
-                                                 'name': re.sub('[\'\']', '', repr(affiliation.text.strip())),
+                                                 'name': re.sub('[\'\"]', '', repr(affiliation.text.strip())),
                                                  'url': self.domain + affiliation['href']}})
 
         article_data['authors_and_affiliations'] = authors_and_affiliations
@@ -78,7 +78,7 @@ class ArticleParser:
         layout = soup.find('div', {'class': 'layout'})
         flatbody = layout.find('div', {'class': 'flatbody'})
 
-        abstract = re.sub('[\'\']', '', repr(flatbody.text.strip()))
+        abstract = re.sub('[\'\"]', '', repr(flatbody.text.strip()))
         article_data['abstract'] = abstract
 
     def __get_venue(self, soup, article_data):
@@ -86,7 +86,7 @@ class ArticleParser:
 
         if td:
             td = td.nextSibling.nextSibling
-            venue = re.sub('[\'\']', '', repr(td.strong.text.strip()))
+            venue = re.sub('[\'\"]', '', repr(td.strong.text.strip()))
             url_conference = td.a['href']
         else:
             venue = None
