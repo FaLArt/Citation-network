@@ -40,6 +40,8 @@ class ArticleParser:
         article_data['title'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('title', None)))
         article_data['doi'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('doi', None)))
         article_data['year'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('year', None)))
+        article_data['venue'] = {'name': re.sub('[\'\"]', '', repr(bibtex_dict[0].get('journal', None))),
+                                 'url': self.domain + 'None'}
 
         print('Getting authors...')
         self.__get_authors_and_affiliations(soup, article_data)
@@ -82,6 +84,9 @@ class ArticleParser:
         article_data['abstract'] = abstract
 
     def __get_venue(self, soup, article_data):
+        if article_data['venue']['name'] != 'None':
+            return
+
         td = soup.find('td', string='Conference')
 
         if td:
@@ -111,5 +116,5 @@ class ArticleParser:
 
 if __name__ == '__main__':
     parser = ArticleParser()
-    article_data = parser.parse('1295014')
+    article_data = parser.parse('2008553')
     open('data.json', 'w').write(json.dumps(article_data, indent=4))
