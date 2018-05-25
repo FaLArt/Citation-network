@@ -36,5 +36,5 @@ class ArticlesListParser:
 
 
 if __name__ == '__main__':
-    parser = ArticleListParser()
+    parser = ArticlesListParser()
     print(parser.parse('1294921'))
