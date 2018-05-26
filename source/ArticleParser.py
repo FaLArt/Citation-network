@@ -116,5 +116,5 @@ class ArticleParser:
 
 if __name__ == '__main__':
     parser = ArticleParser()
-    article_data = parser.parse('2008553')
+    article_data = parser.parse('102678')
     open('data.json', 'w').write(json.dumps(article_data, indent=4))
