@@ -1,0 +1,56 @@
+{
+    "title": "Multiplicity Computing: A Vision of Software Engineering for Next-generation Computing Platform Applications",
+    "authors_and_affiliations": [
+        {
+            "url": "https://dl.acm.org/author_page.cfm?id=81548021172&coll=DL&dl=ACM&trk=0",
+            "name": "Cristian Cadar",
+            "affiliation": {
+                "url": "https://dl.acm.org/inst_page.cfm?id=60015150",
+                "name": "Imperial College London, London, United Kingdom"
+            }
+        },
+        {
+            "url": "https://dl.acm.org/author_page.cfm?id=81100419671&coll=DL&dl=ACM&trk=0",
+            "name": "Peter Pietzuch",
+            "affiliation": {
+                "url": "https://dl.acm.org/inst_page.cfm?id=60015150",
+                "name": "Imperial College London, London, United Kingdom"
+            }
+        },
+        {
+            "url": "https://dl.acm.org/author_page.cfm?id=81100336081&coll=DL&dl=ACM&trk=0",
+            "name": "Alexander L. Wolf",
+            "affiliation": {
+                "url": "https://dl.acm.org/inst_page.cfm?id=60015150",
+                "name": "Imperial College London, London, United Kingdom"
+            }
+        }
+    ],
+    "url": "https://dl.acm.org/citation.cfm?id=1882380&preflayout=flat",
+    "doi": "10.1145/1882362.1882380",
+    "abstract": "New technologies have recently emerged to challenge the very nature of computing: multicore processors, virtualized operating systems and networks, and data-center clouds. One can view these technologies as forming levels within a new, global computing platform. We aim to open a new area of research, called multiplicity computing, that takes a radically different approach to the engineering of applications for this platform. Unlike other efforts, which are largely focused on innovations within specific levels, multiplicity computing embraces the platform as a virtually unlimited space of essentially redundant resources. This space is formed as a whole from the cross product of resources available at each level in the platform, offering a multiplicity of end-to-end resources. We seek to discover fundamentally new ways of exploiting the combinatorial multiplicity of computational, communication, and storage resources to obtain scalable applications exhibiting improved quality, dependability, and security that are both predictable and measurable.",
+    "keywords": [
+        "cloud computing",
+        "data centers",
+        "multicore",
+        "virtualization"
+    ],
+    "cited_by": [
+        "3031918",
+        "2666609",
+        "2664358",
+        "2958035",
+        "2526865",
+        "2486869",
+        "2694390",
+        "2568291",
+        "2351678",
+        "3105429"
+    ],
+    "venue": {
+        "url": "https://dl.acm.org/event.cfm?id=RE201",
+        "name": "FSE"
+    },
+    "article_id": "1882380",
+    "year": "2010"
+}

@@ -31,8 +31,8 @@ class ArticleParser:
         response = requests.get(url=self.url, headers=self.headers)
         soup = bs4.BeautifulSoup(response.text, 'lxml')
 
-        open('bibtex.bib', 'w').write(requests.get(url=self.url_download_bibtex, headers=self.headers).text)
-        bibtex_file = open('bibtex.bib', 'r')
+        open('{0}.bib'.format(article_id), 'w').write(requests.get(url=self.url_download_bibtex, headers=self.headers).text)
+        bibtex_file = open('{0}.bib'.format(article_id), 'r')
         bibtex_dict = BibTexParser(interpolate_strings=False).parse_file(bibtex_file).entries
 
         article_data['article_id'] = article_id
@@ -42,6 +42,7 @@ class ArticleParser:
         article_data['year'] = re.sub('[\'\"]', '', repr(bibtex_dict[0].get('year', None)))
         article_data['venue'] = {'name': re.sub('[\'\"]', '', repr(bibtex_dict[0].get('journal', None))),
                                  'url': self.domain + 'None'}
+        article_data['keywords'] = list(map(str.strip, bibtex_dict[0].get('keywords', None).split(',')))
 
         print('Getting authors...')
         self.__get_authors_and_affiliations(soup, article_data)
@@ -109,12 +110,12 @@ class ArticleParser:
 
         article_data['cited_by'] = cited_by
 
-    @staticmethod
-    def __dump_to_json_file(data_dict):
-        open('data.json', 'w').write(json.dumps(data_dict, indent=4))
+    def dump_to_json_file(self, data_dict):
+        open('{0}.json'.format(self.id), 'w').write(json.dumps(data_dict, indent=4))
 
 
 if __name__ == '__main__':
     parser = ArticleParser()
-    article_data = parser.parse('102678')
-    open('data.json', 'w').write(json.dumps(article_data, indent=4))
+    article_data = parser.parse('1882380')
+    parser.dump_to_json_file(article_data)
+    # open('data.json', 'w').write(json.dumps(article_data, indent=4))
