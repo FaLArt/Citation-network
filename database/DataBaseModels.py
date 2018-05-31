@@ -1,4 +1,5 @@
 from pony.orm import *
+import community
 
 db = Database()
 
